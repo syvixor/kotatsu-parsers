@@ -17,12 +17,10 @@ import org.koitharu.kotatsu.parsers.util.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("MANGAKAKALOT", "Mangakakalot.gg", "en")
+@MangaSourceParser("MANGAKAKALOT", "MangaKakalot", "en")
 internal class Mangakakalot(context: MangaLoaderContext) : MangaboxParser(context, MangaParserSource.MANGAKAKALOT) {
 
-	override val configKeyDomain = ConfigKey.Domain(
-		"www.mangakakalot.gg",
-		"mangakakalot.gg",
+	override val configKeyDomain = ConfigKey.Domain("www.mangakakalot.gg", "mangakakalot.gg",
 	)
 
 	override val availableSortOrders: Set<SortOrder> = EnumSet.of(

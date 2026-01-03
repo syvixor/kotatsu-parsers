@@ -16,7 +16,7 @@ import org.koitharu.kotatsu.parsers.util.json.toJSONObjectOrNull
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("ASURASCANS", "AsuraComic", "en")
+@MangaSourceParser("ASURASCANS", "AsuraScans", "en")
 internal class AsuraScansParser(context: MangaLoaderContext) :
 	PagedMangaParser(context, MangaParserSource.ASURASCANS, pageSize = 30) {
 
