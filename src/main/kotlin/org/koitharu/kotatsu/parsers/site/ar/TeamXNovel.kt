@@ -190,12 +190,12 @@ internal class TeamXNovel(context: MangaLoaderContext) :
 	private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", sourceLocale)
 
 	private fun parseChapters(root: Element): List<MangaChapter> {
-		return root.requireElementById("chapter-contact").select(".eplister ul li")
+		return root.requireElementById("chaptersContainer").select(".chapter-card")
 			.map { li ->
 				val url = li.selectFirstOrThrow("a").attrAsRelativeUrl("href")
 				MangaChapter(
 					id = generateUid(url),
-					title = li.selectFirstOrThrow(".epl-title").text(),
+					title = li.selectFirstOrThrow(".chapter-info .chapter-title").text(),
 					number = url.substringAfterLast('/').toFloatOrNull() ?: 0f,
 					volume = 0,
 					url = url,
@@ -215,7 +215,7 @@ internal class TeamXNovel(context: MangaLoaderContext) :
 				img.hasAttr("src") -> img.requireSrc().toRelativeUrl(domain)
 				else -> img.attrAsRelativeUrl("data-src")
 			}
-			
+
 			MangaPage(
 				id = generateUid(url),
 				url = url,
