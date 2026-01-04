@@ -9,7 +9,7 @@ import org.koitharu.kotatsu.parsers.model.*
 import org.koitharu.kotatsu.parsers.util.*
 import java.util.*
 
-@MangaSourceParser("ROLIASCAN", "Rolia Scan", "en")
+@MangaSourceParser("ROLIASCAN", "RoliaScan", "en")
 internal class RoliaScan(context: MangaLoaderContext) : PagedMangaParser(context, MangaParserSource.ROLIASCAN, 25) {
 
     override val configKeyDomain = ConfigKey.Domain("roliascan.com")

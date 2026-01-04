@@ -189,20 +189,39 @@ internal class TeamXNovel(context: MangaLoaderContext) :
 
 	private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", sourceLocale)
 
-	private fun parseChapters(root: Element): List<MangaChapter> {
+    private fun parseRelativeDate(text: String): Long? {
+        val now = System.currentTimeMillis()
+        val lower = text.lowercase(sourceLocale).trim()
+        val number = lower.split(" ").firstOrNull()?.toIntOrNull() ?: return null
+        val millis = when {
+            "minute" in lower -> number * 60_000L
+            "hour" in lower -> number * 60 * 60_000L
+            "day" in lower -> number * 24 * 60 * 60_000L
+            "week" in lower -> number * 7 * 24 * 60 * 60_000L
+            "month" in lower -> number * 30 * 24 * 60 * 60_000L
+            "year" in lower -> number * 365 * 24 * 60 * 60_000L
+            else -> return null
+        }
+        return now - millis
+    }
+
+    private fun parseChapters(root: Element): List<MangaChapter> {
 		return root.requireElementById("chaptersContainer").select(".chapter-card")
 			.map { li ->
 				val url = li.selectFirstOrThrow("a").attrAsRelativeUrl("href")
+                val chapterNumber = url.substringAfterLast('/').toFloatOrNull() ?: 0f
 				MangaChapter(
 					id = generateUid(url),
-					title = li.selectFirstOrThrow(".chapter-info .chapter-title").text(),
-					number = url.substringAfterLast('/').toFloatOrNull() ?: 0f,
+					title = chapterNumber.toString(),
+					number = chapterNumber,
 					volume = 0,
 					url = url,
 					scanlator = null,
-					uploadDate = dateFormat.parseSafe(li.selectFirstOrThrow(".chapter-date").text()),
+                    uploadDate = parseRelativeDate(li.selectFirstOrThrow(".chapter-date").text())
+                        ?: dateFormat.parseSafe(li.selectFirstOrThrow(".chapter-date").text())
+                        ?: 0L,
 					branch = null,
-					source = source,
+					source = source
 				)
 			}
 	}
@@ -215,12 +234,11 @@ internal class TeamXNovel(context: MangaLoaderContext) :
 				img.hasAttr("src") -> img.requireSrc().toRelativeUrl(domain)
 				else -> img.attrAsRelativeUrl("data-src")
 			}
-
 			MangaPage(
 				id = generateUid(url),
 				url = url,
 				preview = null,
-				source = source,
+				source = source
 			)
 		}
 	}
