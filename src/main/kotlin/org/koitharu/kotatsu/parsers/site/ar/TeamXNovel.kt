@@ -187,39 +187,42 @@ internal class TeamXNovel(context: MangaLoaderContext) :
 		return parseChapters(webClient.httpGet("$baseUrl?page=$page").parseHtml().body())
 	}
 
-	private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", sourceLocale)
+    fun parseRelativeDate(
+        text: String,
+        now: Calendar = Calendar.getInstance()
+    ): Long? {
+        val parts = text.trim().lowercase().split("\\s+".toRegex())
+        if (parts.size < 3 || parts[2] != "ago") return null
 
-    private fun parseRelativeDate(text: String): Long? {
-        val now = System.currentTimeMillis()
-        val lower = text.lowercase(sourceLocale).trim()
-        val number = lower.split(" ").firstOrNull()?.toIntOrNull() ?: return null
-        val millis = when {
-            "minute" in lower -> number * 60_000L
-            "hour" in lower -> number * 60 * 60_000L
-            "day" in lower -> number * 24 * 60 * 60_000L
-            "week" in lower -> number * 7 * 24 * 60 * 60_000L
-            "month" in lower -> number * 30 * 24 * 60 * 60_000L
-            "year" in lower -> number * 365 * 24 * 60 * 60_000L
+        val amount = parts[0].toIntOrNull() ?: return null
+        val unit = parts[1]
+
+        when (unit) {
+            "minute", "minutes" -> now.add(Calendar.MINUTE, -amount)
+            "hour", "hours" -> now.add(Calendar.HOUR, -amount)
+            "day", "days" -> now.add(Calendar.DAY_OF_MONTH, -amount)
+            "week", "weeks" -> now.add(Calendar.WEEK_OF_YEAR, -amount)
+            "month", "months" -> now.add(Calendar.MONTH, -amount)
+            "year", "years" -> now.add(Calendar.YEAR, -amount)
             else -> return null
         }
-        return now - millis
+
+        return now.timeInMillis
     }
 
     private fun parseChapters(root: Element): List<MangaChapter> {
 		return root.requireElementById("chaptersContainer").select(".chapter-card")
 			.map { li ->
 				val url = li.selectFirstOrThrow("a").attrAsRelativeUrl("href")
-                val chapterNumber = url.substringAfterLast('/').toFloatOrNull() ?: 0f
 				MangaChapter(
 					id = generateUid(url),
-					title = chapterNumber.toString(),
-					number = chapterNumber,
+					title = li.selectFirstOrThrow(".chapter-info .chapter-number").text(),
+					number = url.substringAfterLast("/").toIntOrNull()?.toFloat() ?: 0f,
 					volume = 0,
 					url = url,
 					scanlator = null,
-                    uploadDate = parseRelativeDate(li.selectFirstOrThrow(".chapter-date").text())
-                        ?: dateFormat.parseSafe(li.selectFirstOrThrow(".chapter-date").text())
-                        ?: 0L,
+                    uploadDate = parseRelativeDate(li.selectFirstOrThrow
+                        (".chapter-date span").text()) ?: 0L,
 					branch = null,
 					source = source
 				)
