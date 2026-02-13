@@ -139,7 +139,15 @@ internal class MangaGeko(context: MangaLoaderContext) :
 			.mapChapters(reversed = true) { i, li ->
 				val a = li.selectFirstOrThrow("a")
 				val url = a.attrAsRelativeUrl("href")
-				val name = li.selectFirstOrThrow(".chapter-title").text()
+                val rawTitle = li.selectFirstOrThrow(".chapter-title").text()
+                val parts = rawTitle.split("-")
+                val chapterNumber = when {
+                    parts.size >= 2 && parts[1].all { it.isDigit() } ->
+                        "${parts[0]}.${parts[1]}"
+                    else ->
+                        parts[0]
+                }
+                val name = "Chapter $chapterNumber"
 				val dateText = li.select(".chapter-update").attr("datetime").substringBeforeLast(',')
 					.replace(".", "").replace("Sept", "Sep")
 				MangaChapter(
