@@ -7,4 +7,4 @@ import org.koitharu.kotatsu.parsers.site.mangareader.MangaReaderParser
 
 @MangaSourceParser("HIJALA", "Hijala", "ar")
 internal class Hijala(context: MangaLoaderContext) :
-    MangaReaderParser(context, MangaParserSource.HIJALACOM, "hijala.com", pageSize = 30, searchPageSize = 10)
+    MangaReaderParser(context, MangaParserSource.HIJALA, "hijala.com", pageSize = 30, searchPageSize = 10)
