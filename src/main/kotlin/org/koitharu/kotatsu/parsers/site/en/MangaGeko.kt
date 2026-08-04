@@ -11,7 +11,7 @@ import org.koitharu.kotatsu.parsers.util.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("MANGAGEKO", "MangaGeko", "en")
+@MangaSourceParser("MANGAGEKO", "Manga Geko", "en")
 internal class MangaGeko(context: MangaLoaderContext) :
 	PagedMangaParser(context, MangaParserSource.MANGAGEKO, 30) {
 

@@ -5,6 +5,6 @@ import org.koitharu.kotatsu.parsers.MangaSourceParser
 import org.koitharu.kotatsu.parsers.model.MangaParserSource
 import org.koitharu.kotatsu.parsers.site.iken.IkenParser
 
-@MangaSourceParser("VORTEXSCANS", "VortexScans", "en")
+@MangaSourceParser("VORTEXSCANS", "Vortex Scans", "en")
 internal class VortexScans(context: MangaLoaderContext) :
 	IkenParser(context, MangaParserSource.VORTEXSCANS, "vortexscans.org", 18, true)

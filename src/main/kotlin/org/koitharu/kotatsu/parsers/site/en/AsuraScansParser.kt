@@ -13,7 +13,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("ASURASCANS", "AsuraScans", "en")
+@MangaSourceParser("ASURASCANS", "Asura Scans", "en")
 internal class AsuraScansParser(context: MangaLoaderContext) :
     PagedMangaParser(context, MangaParserSource.ASURASCANS, pageSize = 20) {
 

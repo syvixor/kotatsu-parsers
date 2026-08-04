@@ -13,7 +13,7 @@ import org.koitharu.kotatsu.parsers.util.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("TEAMXNOVEL", "TeamX", "ar")
+@MangaSourceParser("TEAMXNOVEL", "Team X", "ar")
 internal class TeamXNovel(context: MangaLoaderContext) :
 	PagedMangaParser(context, MangaParserSource.TEAMXNOVEL, 10) {
 

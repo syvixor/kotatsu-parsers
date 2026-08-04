@@ -11,7 +11,7 @@ import org.jsoup.nodes.Element
 import java.text.SimpleDateFormat
 import java.util.*
 
-@MangaSourceParser("DEMONICSCANS", "DemonicScans", "en")
+@MangaSourceParser("DEMONICSCANS", "Demonic Scans", "en")
 internal class DemonicScans(context: MangaLoaderContext) :
     PagedMangaParser(context, MangaParserSource.DEMONICSCANS, 25) {
 
@@ -83,7 +83,7 @@ internal class DemonicScans(context: MangaLoaderContext) :
         val doc = webClient.httpGet(url).parseHtml()
         val selector = when {
             hasQuery -> "body > a[href]"
-            isNewest -> "div#updates-container > div.updates-element" 
+            isNewest -> "div#updates-container > div.updates-element"
             else -> "div#advanced-content > div.advanced-element"
         }
 

@@ -9,7 +9,7 @@ import org.koitharu.kotatsu.parsers.util.*
 import org.jsoup.nodes.Document
 import java.util.*
 
-@MangaSourceParser("MANGAPILL", "MangaPill", "en")
+@MangaSourceParser("MANGAPILL", "Manga Pill", "en")
 internal class MangaPill(context: MangaLoaderContext) : PagedMangaParser(context, MangaParserSource.MANGAPILL, 50) {
 
 	override val configKeyDomain = ConfigKey.Domain("mangapill.com")
@@ -121,7 +121,7 @@ internal class MangaPill(context: MangaLoaderContext) : PagedMangaParser(context
 			?.nextElementSibling()?.text()
 
 		val tags = doc.select("div").firstOrNull {
-			it.selectFirst("label.text-secondary")?.text() == "Genres" 
+			it.selectFirst("label.text-secondary")?.text() == "Genres"
 		}?.select("a.text-sm.mr-1.text-brand")?.mapToSet { element ->
 			MangaTag(
 				key = element.attr("href").substringAfter("/search?genre="),

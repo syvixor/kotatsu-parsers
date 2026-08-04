@@ -5,6 +5,6 @@ import org.koitharu.kotatsu.parsers.MangaSourceParser
 import org.koitharu.kotatsu.parsers.model.MangaParserSource
 import org.koitharu.kotatsu.parsers.site.zeistmanga.ZeistMangaParser
 
-@MangaSourceParser("XSANOMANGA", "XSanoManga", "ar")
+@MangaSourceParser("XSANOMANGA", "XSano Manga", "ar")
 internal class XsanoManga(context: MangaLoaderContext) :
 	ZeistMangaParser(context, MangaParserSource.XSANOMANGA, "www.xsano-manga.com")
