@@ -3,8 +3,6 @@
 This library provides a collection of manga parsers for convenient access manga available on the web. It can be used in
 JVM and Android applications.
 
-![Sources count](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsyvixor%2Fkotatsu-parsers%2Frefs%2Fheads%2Fmaster%2F.github%2Fsummary.yaml&query=total&label=manga%20sources&color=%23E9321C) [![](https://jitpack.io/v/KotatsuApp/kotatsu-parsers.svg)](https://jitpack.io/#syvixor/kotatsu-parsers)
-
 ## Usage
 
 1. Add it to your root build.gradle at the end of repositories:
